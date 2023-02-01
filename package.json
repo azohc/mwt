@@ -1,9 +1,11 @@
 {
-  "name": "web-tooling-001",
+  "name": "web-tooling-003",
   "version": "1.0.0",
   "description": "first web tooling project",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint .",
+    "format": "prettier . --write",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -12,5 +14,17 @@
     "project"
   ],
   "author": "juan juanchozass@gmail.com",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^8.33.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "prettier": "^2.8.3",
+    "typescript": "^4.9.5"
+  },
+  "repository": "https://github.com/azohc/mwt.git",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "@typescript-eslint/parser": "^5.50.0"
+  }
 }
