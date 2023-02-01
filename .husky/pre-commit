@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo 'TODO: this pre commit hook should run `npm test`'
+
+## should test
+# npm test
