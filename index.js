@@ -1,1 +1,1 @@
-console.log('late submissions are better than no submissions')
+console.log("late submissions are better than no submissions");
