@@ -6,7 +6,9 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:prettier/recommended"
   ],
   "overrides": [],
   "parser": "@typescript-eslint/parser",
@@ -14,6 +16,6 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint"],
-  "rules": {}
+  "plugins": ["react", "prettier", "@typescript-eslint"],
+  "rules": { "prettier/prettier": "error" }
 }
