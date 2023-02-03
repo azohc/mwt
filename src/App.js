@@ -10,45 +10,43 @@ function App() {
     document.addEventListener("keyup", (event) => {
       if (event.code === "Space") {
         setSearchVisible(true);
-        searchField.current.focus();
+        searchField.current?.focus();
+      } else if (event.code === "Escape") {
+        setSearchVisible(false);
       }
     });
   }, []);
 
-  function keyUp(e) {
-    if (e.keyCode == 13) {
-      const val = document
-        .getElementById("search-field")
-        .value.trim();
-      const split = val.split(" ");
-      if (split[0] == "g")
-        window.open(
-          "https://google.com/search?&q=" +
-            val.substring(1, val.length),
-          "_self"
+  function keyUp(event) {
+    if (event.code === "Enter") {
+      const searchFieldValue = searchField.current.value;
+      const preFirstSpace = searchFieldValue.split(" ")[0];
+
+      const DUCKDUCKGO = "https://duckduckgo.com/?q=";
+      const GOOGLE = "https://google.com/search?&q=";
+      const YOUTUBE = "https://www.youtube.com/results?search_query=";
+      const I3 = "https://duckduckgo.com/?q=site:i3wm.org/docs ";
+      const TRANSLATE =
+        "https://translate.google.com/#view=home&op=translate&sl=auto&tl=en&text= ";
+
+      const searchUrlByCode = {
+        g: GOOGLE,
+        d: DUCKDUCKGO,
+        i: I3,
+        t: TRANSLATE,
+        y: YOUTUBE,
+      };
+
+      if (searchUrlByCode[preFirstSpace]) {
+        const url = searchUrlByCode[preFirstSpace];
+        const query = searchFieldValue.substring(
+          1,
+          searchFieldValue.length
         );
-      else if (split[0] == "y")
-        window.open(
-          "https://www.youtube.com/results?search_query=" +
-            val.substring(1, val.length),
-          "_self"
-        );
-      else if (split[0] == "i")
-        window.open(
-          "https://duckduckgo.com/?q=site:i3wm.org/docs " +
-            val.substring(1, val.length),
-          "_self"
-        );
-      else if (split[0] == "t")
-        window.open(
-          "https://translate.google.com/#view=home&op=translate&sl=auto&tl=en&text= " +
-            val.substring(1, val.length),
-          "_self"
-        );
-      else window.open("https://duckduckgo.com/?q=" + val, "_self");
-      document.getElementById("search-field").value = "";
-      document.getElementById("search-field").blur();
-      document.getElementById("search").style.display = "none";
+        window.open(url + query, "_self");
+      } else {
+        window.open(DUCKDUCKGO + searchFieldValue, "_self");
+      }
     }
   }
 
