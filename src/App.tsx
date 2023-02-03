@@ -2,15 +2,16 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Search from "./components/Search";
+import * as React from "react";
 
-function App() {
+const App = () => {
   const [searchVisible, setSearchVisible] = useState(false);
 
   useEffect(() => {
-    document.addEventListener("keyup", (event) => {
-      if (event.code === "Space") {
+    document.addEventListener("keyup", ({ code }) => {
+      if (code === "Space") {
         setSearchVisible(true);
-      } else if (event.code === "Escape") {
+      } else if (code === "Escape") {
         setSearchVisible(false);
       }
     });
@@ -21,6 +22,6 @@ function App() {
       {searchVisible ? <Search /> : <Header />}
     </div>
   );
-}
+};
 
 export default App;
