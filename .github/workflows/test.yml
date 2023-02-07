@@ -1,8 +1,7 @@
 name: test
-run-name: ${{ github.action }} by @${{ github.actor }} triggered by ${{ github.triggering_actor }}
 on: push
 jobs:
-  build:
+  build-and-test:
     name: yarn build
     runs-on: ubuntu-latest
     steps:
@@ -14,10 +13,5 @@ jobs:
           node-version: 18
       - name: run yarn
         run: yarn
-  test:
-    name: yarn test
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - name: run tests
         run: yarn test
