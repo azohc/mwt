@@ -1,8 +1,7 @@
 name: test
 on: push
 jobs:
-  build-and-test:
-    name: yarn build
+  build-lint-test:
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo
@@ -13,5 +12,7 @@ jobs:
           node-version: 18
       - name: run yarn
         run: yarn
+      - name: run eslint
+        run: yarn lint
       - name: run tests
         run: yarn test
