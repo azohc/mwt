@@ -1,0 +1,19 @@
+name: test
+run-name: \[${{ github.action }}\] by @${{ github.actor }} triggered by {{ github.triggering_actor }}
+on:
+  push
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout repo
+      uses: actions/checkout@v3
+    - name: use nodejs
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - name: run yarn 
+      run: yarn
+    - name: run tests
+      run: yarn test
+    
