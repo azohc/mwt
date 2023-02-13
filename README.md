@@ -1,70 +1,76 @@
-# Getting Started with Create React App
+# homepage
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+a flexible dashboard enhanced by customizable keyboard shortcuts to quickly perform searches or open bookmarks
 
-## Available Scripts
+## key features
 
-In the project directory, you can run:
+- widgets to display time and weather information in a customizable format
+- bookmark widgets that respond to keyboard shortcuts
+- fullscreen search with google, youtube, or duckduckgo
 
-### `npm start`
+## installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```shell
+yarn install
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## tools used
 
-### `npm test`
+- [prettier](https://prettier.io/): an opinionated code formatter
+- [eslint](https://eslint.org/): a pluggable linting utility for javascript
+- [husky](https://github.com/typicode/husky): a git hooks manager for node.js
+- [jest](https://jestjs.io/) + [testing-library](https://testing-library.com/): testing frameworks for javascript
+- [storybook](https://storybook.js.org/): a development environment for UI components
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## react scripts
 
-### `npm run build`
+### `yarn start`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+runs the app in the development mode.\
+open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+the page will reload when you make changes.\
+you may also see any lint errors in the console.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `yarn test`
 
-### `npm run eject`
+launches the test runner in the interactive watch mode.\
+see the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### `yarn build`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+builds the app for production to the `build` folder.\
+it correctly bundles React in production mode and optimizes the build for the best performance.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+the build is minified and the filenames include the hashes.\
+your app is ready to be deployed!
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+see the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Learn More
+### `yarn eject`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**note: this is a one-way operation. once you `eject`, you can't go back!**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+if you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-### Code Splitting
+instead, it will copy all the configuration files and the transitive dependencies (webpack, babel, eslint, etc) right into your project so you have full control over them. all of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. at this point you're on your own.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+you don't have to ever use `eject`. the curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. however we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-### Analyzing the Bundle Size
+## npm scripts
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- `start`: [see above](#react-scripts)
+- `build`: [see above](#react-scripts)
+- `test`: [see above](#react-scripts)
+- `lint`: lints the code with eslint
+- `format`: formats the code with prettier
+- `deploy`: build and deploy to github pages
+- `storybook`: run storybook instance
 
-### Making a Progressive Web App
+## husky hooks for git
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- `pre-commit`: ensures [lint](#npm-scripts) and [unit tests](#yarn-test) run successfully before committing to git
 
-### Advanced Configuration
+## github actions
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- `lint-and-test`: installs dependencies, runs eslint, and runs jest
