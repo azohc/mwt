@@ -1,0 +1,72 @@
+.time-display {
+  font-size: 5rem;
+}
+
+.time-editable-container {
+  min-width: 360px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--c-bg);
+  border: 8px solid var(--c-bg-darker);
+  border-radius: 8px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.time-display,
+.widget-title,
+.widget-preview {
+  font-weight: normal;
+}
+
+.drag-handle {
+  background-color: var(--c-bg);
+  border: none;
+  /* TODO implement draggability */
+  /* cursor: grab; */
+  cursor: wait;
+}
+
+.controls-preview {
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: start;
+}
+
+.control {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.control > select {
+  flex-grow: 1;
+  background-color: var(--c-bg-darker);
+  color: var(--c-white);
+  border: none;
+  padding: 0.25rem;
+  text-align: end;
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.preview-label {
+  text-align: end;
+}

@@ -1,7 +1,18 @@
+:root {
+  --c-white: #ffffff;
+  --c-bg: #44475a;
+  --c-bg-darker: #282a36;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .App {
   text-align: center;
   display: flex;
-  background-color: #282c34;
+  background-color: var(--c-bg);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -25,10 +36,6 @@
   font-size: calc(10px + 2vmin);
 }
 
-.App-link {
-  color: #61dafb;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,31 +43,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-.search {
-  width: 100vw;
-  height: 100vh;
-  background-color: #282c34;
-  position: absolute;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.search-field {
-  width: 90%;
-  padding: 0.75em 1em;
-  box-sizing: border-box;
-  background-color: #282c34;
-  border: solid 0px #282c34;
-  /* font-family: "Inconsolata"; */
-  font-size: 4rem;
-  color: white;
-  outline: none;
-  border-radius: 3px;
-  /* margin-bottom: 1em; */
-  text-align: center;
 }

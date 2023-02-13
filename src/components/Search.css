@@ -1,0 +1,26 @@
+.search {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--c-bg-darker);
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-field {
+  width: 90%;
+  padding: 0.75em 1em;
+  box-sizing: border-box;
+  background-color: var(--c-bg-darker);
+  border: solid 0px var(--c-bg-darker);
+  /* font-family: "Inconsolata"; */
+  font-size: 4rem;
+  color: var(--c-white);
+  outline: none;
+  border-radius: 3px;
+  /* margin-bottom: 1em; */
+  text-align: center;
+}

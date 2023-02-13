@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useEffect, useRef } from "react";
+import "./Search.css";
 
 const DUCKDUCKGO = "https://duckduckgo.com/?q=";
 const GOOGLE = "https://google.com/search?&q=";

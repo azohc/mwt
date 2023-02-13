@@ -1,8 +1,8 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import Header from "./components/Header";
 import Search from "./components/Search";
 import * as React from "react";
+import Dashboard from "./views/Dashboard";
 
 const App = () => {
   const [searchVisible, setSearchVisible] = useState(false);
@@ -19,7 +19,7 @@ const App = () => {
 
   return (
     <div className="App">
-      {searchVisible ? <Search /> : <Header />}
+      {searchVisible ? <Search /> : <Dashboard />}
     </div>
   );
 };
