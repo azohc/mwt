@@ -12,7 +12,9 @@
     "lint": "eslint src",
     "format": "prettier . --check --write",
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "browserslist": {
     "production": [
@@ -50,9 +52,35 @@
   "repository": "https://github.com/azohc/mwt.git",
   "homepage": "https://azohc.github.io/mwt",
   "devDependencies": {
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-essentials": "^6.5.16",
+    "@storybook/addon-interactions": "^6.5.16",
+    "@storybook/addon-links": "^6.5.16",
+    "@storybook/builder-webpack5": "^6.5.16",
+    "@storybook/manager-webpack5": "^6.5.16",
+    "@storybook/node-logger": "^6.5.16",
+    "@storybook/preset-create-react-app": "^4.1.2",
+    "@storybook/react": "^6.5.16",
+    "@storybook/testing-library": "^0.0.13",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
+    "babel-plugin-named-exports-order": "^0.0.2",
     "eslint-config-prettier": "^8.6.0",
-    "gh-pages": "^5.0.0"
+    "eslint-plugin-storybook": "^0.6.10",
+    "gh-pages": "^5.0.0",
+    "prop-types": "^15.8.1",
+    "webpack": "^5.75.0"
+  },
+  "eslintConfig": {
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
   }
 }
