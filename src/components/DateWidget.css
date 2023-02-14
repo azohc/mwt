@@ -26,7 +26,7 @@
 .date-controls-preview {
   padding-top: 1rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 1rem;
 }
 
@@ -58,6 +58,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  margin-inline-start: auto;
 }
 
 .date-preview-label {
