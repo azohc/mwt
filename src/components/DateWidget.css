@@ -3,13 +3,18 @@
 }
 
 .date-editable-container {
-  min-width: 360px;
+  min-width: 700px;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   background-color: var(--c-bg);
   border: 8px solid var(--c-bg-darker);
   border-radius: 8px;
+}
+
+.date-header {
+  display: flex;
+  justify-content: space-between;
 }
 
 .date-display,
@@ -19,6 +24,7 @@
 }
 
 .date-controls-preview {
+  padding-top: 1rem;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
@@ -45,6 +51,7 @@
   border: none;
   padding: 0.25rem;
   text-align: end;
+  border-radius: 4px;
 }
 
 .date-preview {
