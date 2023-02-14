@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import "./DateWidget.css";
+import Select from "./Select";
 
 const COUNTRY_SPAIN = "spain";
 const COUNTRY_USA = "united states";
@@ -45,7 +46,7 @@ const MONTH_OPTIONS = [
   OPTION_LONG,
 ] as const;
 
-interface DateWidgetOptions {
+interface DateWidgetConfig {
   country: (typeof COUNTRY_OPTIONS)[number];
   language: (typeof LANGUAGE_OPTIONS)[number];
   day?: (typeof DAY_OPTIONS)[number];
@@ -54,7 +55,7 @@ interface DateWidgetOptions {
   year?: (typeof YEAR_OPTIONS)[number];
 }
 
-const initialOptions: DateWidgetOptions = {
+const initialOptions: DateWidgetConfig = {
   country: COUNTRY_SPAIN,
   language: LANG_ENGLISH,
   day: OPTION_NUMERIC,
@@ -62,8 +63,8 @@ const initialOptions: DateWidgetOptions = {
   year: OPTION_NUMERIC,
 };
 
-const storeKey = "DATE_WIDGET_OPTIONS";
-const loadOptions = (): DateWidgetOptions => {
+const storeKey = "DATE_WIDGET_CONFIG";
+const loadConfig = (): DateWidgetConfig => {
   const ls = localStorage.getItem(storeKey);
   if (!ls) return initialOptions;
 
@@ -80,18 +81,17 @@ interface DateWidgetProps {
 }
 
 const DateWidget = ({ date, editable }: DateWidgetProps) => {
-  const [options, setOptions] =
-    useState<DateWidgetOptions>(loadOptions);
+  const [config, setConfig] = useState<DateWidgetConfig>(loadConfig);
 
-  const saveOptions = (options: DateWidgetOptions) => {
-    setOptions(options);
+  const saveConfig = (options: DateWidgetConfig) => {
+    setConfig(options);
     localStorage.setItem(storeKey, JSON.stringify(options));
   };
 
   const displayDateString = () => {
     let lang, country;
 
-    switch (options["language"]) {
+    switch (config["language"]) {
       case LANG_SPANISH:
         lang = "es";
         break;
@@ -102,7 +102,7 @@ const DateWidget = ({ date, editable }: DateWidgetProps) => {
         throw new Error("unrecognized language");
     }
 
-    switch (options["country"]) {
+    switch (config["country"]) {
       case COUNTRY_SPAIN:
         country = "ES";
         break;
@@ -116,19 +116,17 @@ const DateWidget = ({ date, editable }: DateWidgetProps) => {
     return date
       .toLocaleDateString(`${lang}-${country}`, {
         day:
-          options["day"] === OPTION_NONE ? undefined : options["day"],
+          config["day"] === OPTION_NONE ? undefined : config["day"],
         weekday:
-          options["weekday"] === OPTION_NONE
+          config["weekday"] === OPTION_NONE
             ? undefined
-            : options["weekday"],
+            : config["weekday"],
         month:
-          options["month"] === OPTION_NONE
+          config["month"] === OPTION_NONE
             ? undefined
-            : options["month"],
+            : config["month"],
         year:
-          options["year"] === OPTION_NONE
-            ? undefined
-            : options["year"],
+          config["year"] === OPTION_NONE ? undefined : config["year"],
       })
       .toLowerCase();
   };
@@ -144,125 +142,74 @@ const DateWidget = ({ date, editable }: DateWidgetProps) => {
       </div>
       <div className="date-controls-preview">
         <div className="date-controls">
-          <div className="date-control">
-            <label htmlFor="country">country</label>
-            <select
-              id="country"
-              value={options["country"]}
-              onChange={(e) =>
-                saveOptions({
-                  ...options,
-                  country: e.target
-                    .value as DateWidgetOptions["country"],
-                })
-              }
-            >
-              {COUNTRY_OPTIONS.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="date-control">
-            <label htmlFor="language">language</label>
-            <select
-              id="language"
-              value={options["language"]}
-              onChange={(e) =>
-                saveOptions({
-                  ...options,
-                  language: e.target
-                    .value as DateWidgetOptions["language"],
-                })
-              }
-            >
-              {LANGUAGE_OPTIONS.map((l) => (
-                <option key={l} value={l}>
-                  {l}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Select
+            label="country"
+            initialSelectedOption={config["country"]}
+            options={COUNTRY_OPTIONS}
+            onOptionChange={(newValue) =>
+              saveConfig({
+                ...config,
+                country: newValue as DateWidgetConfig["country"],
+              })
+            }
+          />
+          <Select
+            label="language"
+            initialSelectedOption={config["language"]}
+            options={LANGUAGE_OPTIONS}
+            onOptionChange={(newValue) =>
+              saveConfig({
+                ...config,
+                language: newValue as DateWidgetConfig["language"],
+              })
+            }
+          />
         </div>
         <div className="date-controls">
-          <div className="date-control">
-            <label htmlFor="weekday">weekday</label>
-            <select
-              id="weekday"
-              value={options["weekday"]}
-              onChange={(e) =>
-                saveOptions({
-                  ...options,
-                  weekday: e.target
-                    .value as DateWidgetOptions["weekday"],
-                })
-              }
-            >
-              {WEEKDAY_OPTIONS.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="date-control">
-            <label htmlFor="day">day</label>
-            <select
-              id="day"
-              value={options["day"]}
-              onChange={(e) =>
-                saveOptions({
-                  ...options,
-                  day: e.target.value as DateWidgetOptions["day"],
-                })
-              }
-            >
-              {DAY_OPTIONS.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="date-control">
-            <label htmlFor="month">month</label>
-            <select
-              id="month"
-              value={options["month"]}
-              onChange={(e) =>
-                saveOptions({
-                  ...options,
-                  month: e.target.value as DateWidgetOptions["month"],
-                })
-              }
-            >
-              {MONTH_OPTIONS.map((l) => (
-                <option key={l} value={l}>
-                  {l}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="date-control">
-            <label htmlFor="year">year</label>
-            <select
-              id="year"
-              value={options["year"]}
-              onChange={(e) =>
-                saveOptions({
-                  ...options,
-                  year: e.target.value as DateWidgetOptions["year"],
-                })
-              }
-            >
-              {YEAR_OPTIONS.map((l) => (
-                <option key={l} value={l}>
-                  {l}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Select
+            label="weekday"
+            initialSelectedOption={config["weekday"] || OPTION_NONE}
+            options={WEEKDAY_OPTIONS}
+            onOptionChange={(newValue) =>
+              saveConfig({
+                ...config,
+                weekday: newValue as DateWidgetConfig["weekday"],
+              })
+            }
+          />
+          <Select
+            label="day"
+            initialSelectedOption={config["day"] || OPTION_NONE}
+            options={DAY_OPTIONS}
+            onOptionChange={(newValue) =>
+              saveConfig({
+                ...config,
+                day: newValue as DateWidgetConfig["day"],
+              })
+            }
+          />
+          <Select
+            label="month"
+            initialSelectedOption={config["month"] || OPTION_NONE}
+            options={MONTH_OPTIONS}
+            onOptionChange={(newValue) =>
+              saveConfig({
+                ...config,
+                month: newValue as DateWidgetConfig["month"],
+              })
+            }
+          />
+          <Select
+            label="year"
+            initialSelectedOption={config["year"] || OPTION_NONE}
+            options={YEAR_OPTIONS}
+            onOptionChange={(newValue) =>
+              saveConfig({
+                ...config,
+                year: newValue as DateWidgetConfig["year"],
+              })
+            }
+          />
         </div>
         <div className="date-preview">
           <div className="date-preview-label">preview</div>

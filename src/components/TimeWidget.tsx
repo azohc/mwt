@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
+import Select from "./Select";
 import "./TimeWidget.css";
 
 const COUNTRY_SPAIN = "spain";
@@ -15,20 +16,20 @@ const LANGUAGE_OPTIONS = [LANG_SPANISH, LANG_ENGLISH] as const;
 const COUNTRY_OPTIONS = [COUNTRY_SPAIN, COUNTRY_USA] as const;
 const HOUR_FORMAT_OPTIONS = [HOURS_12, HOURS_24] as const;
 
-interface TimeWidgetOptions {
+interface TimeWidgetConfig {
   country: (typeof COUNTRY_OPTIONS)[number];
   language: (typeof LANGUAGE_OPTIONS)[number];
   hourFormat: (typeof HOUR_FORMAT_OPTIONS)[number];
 }
 
-const initialOptions: TimeWidgetOptions = {
+const initialOptions: TimeWidgetConfig = {
   country: COUNTRY_SPAIN,
   language: LANG_ENGLISH,
   hourFormat: HOURS_12,
 };
 
-const storeKey = "TIME_WIDGET_OPTIONS";
-const loadOptions = (): TimeWidgetOptions => {
+const storeKey = "TIME_WIDGET_CONFIG";
+const loadOptions = (): TimeWidgetConfig => {
   const ls = localStorage.getItem(storeKey);
   if (!ls) return initialOptions;
 
@@ -45,18 +46,17 @@ interface TimeWidgetProps {
 }
 
 const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
-  const [options, setOptions] =
-    useState<TimeWidgetOptions>(loadOptions);
+  const [config, setConfig] = useState<TimeWidgetConfig>(loadOptions);
 
-  const saveOptions = (options: TimeWidgetOptions) => {
-    setOptions(options);
+  const saveConfig = (options: TimeWidgetConfig) => {
+    setConfig(options);
     localStorage.setItem(storeKey, JSON.stringify(options));
   };
 
   const displayTimeString = () => {
     let lang, country;
 
-    switch (options["language"]) {
+    switch (config["language"]) {
       case LANG_SPANISH:
         lang = "es";
         break;
@@ -67,7 +67,7 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
         throw new Error("unrecognized language");
     }
 
-    switch (options["country"]) {
+    switch (config["country"]) {
       case COUNTRY_SPAIN:
         country = "ES";
         break;
@@ -79,7 +79,7 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
     }
 
     return date.toLocaleTimeString(`${lang}-${country}`, {
-      hour12: options["hourFormat"] === HOURS_12,
+      hour12: config["hourFormat"] === HOURS_12,
     });
   };
 
@@ -95,67 +95,40 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
       </div>
       <div className="time-controls-preview">
         <div className="time-controls">
-          <div className="time-control">
-            <label htmlFor="country">country</label>
-            <select
-              id="country"
-              value={options["country"]}
-              onChange={(e) =>
-                saveOptions({
-                  ...options,
-                  country: e.target
-                    .value as TimeWidgetOptions["country"],
-                })
-              }
-            >
-              {COUNTRY_OPTIONS.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="time-control">
-            <label htmlFor="language">language</label>
-            <select
-              id="language"
-              value={options["language"]}
-              onChange={(e) =>
-                saveOptions({
-                  ...options,
-                  language: e.target
-                    .value as TimeWidgetOptions["language"],
-                })
-              }
-            >
-              {LANGUAGE_OPTIONS.map((l) => (
-                <option key={l} value={l}>
-                  {l}
-                </option>
-              ))}
-            </select>
-          </div>
-          {/* TODO make a two button combo situation instead of dropdown? */}
-          <div className="time-control">
-            <label htmlFor="hourFormat">hour format</label>
-            <select
-              id="hourFormat"
-              value={options["hourFormat"]}
-              onChange={(e) =>
-                saveOptions({
-                  ...options,
-                  hourFormat: e.target
-                    .value as TimeWidgetOptions["hourFormat"],
-                })
-              }
-            >
-              {HOUR_FORMAT_OPTIONS.map((hf) => (
-                <option key={hf} value={hf}>
-                  {hf}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Select
+            label="country"
+            initialSelectedOption={config["country"]}
+            options={COUNTRY_OPTIONS}
+            onOptionChange={(newValue) =>
+              saveConfig({
+                ...config,
+                country: newValue as TimeWidgetConfig["country"],
+              })
+            }
+          />
+          <Select
+            label="language"
+            initialSelectedOption={config["language"]}
+            options={LANGUAGE_OPTIONS}
+            onOptionChange={(newValue) =>
+              saveConfig({
+                ...config,
+                language: newValue as TimeWidgetConfig["language"],
+              })
+            }
+          />
+          <Select
+            label="hour format"
+            initialSelectedOption={config["hourFormat"]}
+            options={HOUR_FORMAT_OPTIONS}
+            onOptionChange={(newValue) =>
+              saveConfig({
+                ...config,
+                hourFormat:
+                  newValue as TimeWidgetConfig["hourFormat"],
+              })
+            }
+          />
         </div>
         <div className="time-preview">
           <div className="time-preview-label">preview</div>

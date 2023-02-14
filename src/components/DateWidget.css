@@ -37,23 +37,6 @@
   align-items: flex-start;
 }
 
-.date-control {
-  width: 100%;
-  display: flex;
-  gap: 0.5rem;
-  align-items: baseline;
-}
-
-.date-control > select {
-  flex-grow: 1;
-  background-color: var(--c-bg-darker);
-  color: var(--c-white);
-  border: none;
-  padding: 0.25rem;
-  text-align: end;
-  border-radius: 4px;
-}
-
 .date-preview {
   display: flex;
   flex-direction: column;
