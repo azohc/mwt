@@ -131,7 +131,7 @@ const DateWidget = ({ date, editable }: DateWidgetProps) => {
 
   return editable ? (
     <div className="date-editable-container">
-      <div className="header">
+      <div className="date-header">
         <h1 className="date-widget-title">date format</h1>
         <></>
       </div>

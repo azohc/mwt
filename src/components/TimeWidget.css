@@ -12,18 +12,18 @@
   border-radius: 8px;
 }
 
-.header {
+.time-header {
   display: flex;
   justify-content: space-between;
 }
 
 .time-display,
-.widget-title,
-.widget-preview {
+.time-widget-title,
+.time-widget-preview {
   font-weight: normal;
 }
 
-.drag-handle {
+.time-drag-handle {
   background-color: var(--c-bg);
   border: none;
   /* TODO implement draggability */
@@ -31,42 +31,43 @@
   cursor: wait;
 }
 
-.controls-preview {
+.time-controls-preview {
   padding-top: 1rem;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
 }
 
-.controls {
+.time-controls {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   align-items: flex-start;
 }
 
-.control {
+.time-control {
   width: 100%;
   display: flex;
   gap: 0.5rem;
   align-items: baseline;
 }
 
-.control > select {
+.time-control > select {
   flex-grow: 1;
   background-color: var(--c-bg-darker);
   color: var(--c-white);
   border: none;
   padding: 0.25rem;
   text-align: end;
+  border-radius: 4px;
 }
 
-.preview {
+.time-preview {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
 
-.preview-label {
+.time-preview-label {
   text-align: end;
 }

@@ -79,14 +79,14 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
 
   return editable ? (
     <div className="time-editable-container">
-      <div className="header">
-        <h1 className="widget-title">time format</h1>
+      <div className="time-header">
+        <h1 className="time-widget-title">time format</h1>
         <></>
         {/* <button className="drag-handle">✋👊</button> */}
       </div>
-      <div className="controls-preview">
-        <div className="controls">
-          <div className="control">
+      <div className="time-controls-preview">
+        <div className="time-controls">
+          <div className="time-control">
             <label htmlFor="country">country</label>
             <select
               id="country"
@@ -102,7 +102,7 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
               ))}
             </select>
           </div>
-          <div className="control">
+          <div className="time-control">
             <label htmlFor="language">language</label>
             <select
               id="language"
@@ -119,7 +119,7 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
             </select>
           </div>
           {/* TODO make a two button combo situation instead of dropdown? */}
-          <div className="control">
+          <div className="time-control">
             <label htmlFor="hourFormat">hour format</label>
             <select
               id="hourFormat"
@@ -139,9 +139,11 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
             </select>
           </div>
         </div>
-        <div className="preview">
-          <div className="preview-label">preview</div>
-          <h2 className="widget-preview">{displayTimeString()}</h2>
+        <div className="time-preview">
+          <div className="time-preview-label">preview</div>
+          <h2 className="time-widget-preview">
+            {displayTimeString()}
+          </h2>
         </div>
       </div>
     </div>
