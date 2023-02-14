@@ -21,12 +21,32 @@ const initialOptions = {
   hourFormat: HOURS_12,
 };
 
+const storeKey = "TIME_WIDGET_OPTIONS";
+const loadOptions = () => {
+  const ls = localStorage.getItem(storeKey);
+  if (!ls) {
+    return initialOptions;
+  }
+  return JSON.parse(ls);
+};
+
 interface TimeWidgetProps {
   date: Date;
   editable: boolean;
 }
+
 const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
-  const [options, setOptions] = useState(initialOptions);
+  const [options, setOptions] = useState(loadOptions);
+
+  const saveOptions = (options: {
+    country: string;
+    language: string;
+    hourFormat: string;
+  }) => {
+    setOptions(options);
+    localStorage.setItem(storeKey, JSON.stringify(options));
+  };
+
   const displayTimeString = () => {
     let lang, country;
 
@@ -71,7 +91,7 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
               id="country"
               value={options["country"]}
               onChange={(e) =>
-                setOptions({ ...options, country: e.target.value })
+                saveOptions({ ...options, country: e.target.value })
               }
             >
               {countries.map((c) => (
@@ -87,7 +107,7 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
               id="language"
               value={options["language"]}
               onChange={(e) =>
-                setOptions({ ...options, language: e.target.value })
+                saveOptions({ ...options, language: e.target.value })
               }
             >
               {languages.map((l) => (
@@ -104,7 +124,10 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
               id="hourFormat"
               value={options["hourFormat"]}
               onChange={(e) =>
-                setOptions({ ...options, hourFormat: e.target.value })
+                saveOptions({
+                  ...options,
+                  hourFormat: e.target.value,
+                })
               }
             >
               {hourFormats.map((hf) => (
