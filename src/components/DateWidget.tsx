@@ -46,12 +46,12 @@ const MONTH_OPTIONS = [
 ] as const;
 
 interface DateWidgetOptions {
-  country: string;
-  language: string;
-  day?: string;
-  weekday?: string;
-  month?: string;
-  year?: string;
+  country: (typeof COUNTRY_OPTIONS)[number];
+  language: (typeof LANGUAGE_OPTIONS)[number];
+  day?: (typeof DAY_OPTIONS)[number];
+  weekday?: (typeof WEEKDAY_OPTIONS)[number];
+  month?: (typeof MONTH_OPTIONS)[number];
+  year?: (typeof YEAR_OPTIONS)[number];
 }
 
 const initialOptions: DateWidgetOptions = {
@@ -63,12 +63,15 @@ const initialOptions: DateWidgetOptions = {
 };
 
 const storeKey = "DATE_WIDGET_OPTIONS";
-const loadOptions = () => {
+const loadOptions = (): DateWidgetOptions => {
   const ls = localStorage.getItem(storeKey);
-  if (!ls) {
+  if (!ls) return initialOptions;
+
+  try {
+    return JSON.parse(ls);
+  } catch (error) {
     return initialOptions;
   }
-  return JSON.parse(ls);
 };
 
 interface DateWidgetProps {
@@ -77,7 +80,8 @@ interface DateWidgetProps {
 }
 
 const DateWidget = ({ date, editable }: DateWidgetProps) => {
-  const [options, setOptions] = useState(loadOptions);
+  const [options, setOptions] =
+    useState<DateWidgetOptions>(loadOptions);
 
   const saveOptions = (options: DateWidgetOptions) => {
     setOptions(options);
@@ -129,7 +133,10 @@ const DateWidget = ({ date, editable }: DateWidgetProps) => {
       .toLowerCase();
   };
 
-  return editable ? (
+  if (!editable) {
+    return <h1 className="date-display">{displayDateString()}</h1>;
+  }
+  return (
     <div className="date-editable-container">
       <div className="date-header">
         <h1 className="date-widget-title">date format</h1>
@@ -143,7 +150,11 @@ const DateWidget = ({ date, editable }: DateWidgetProps) => {
               id="country"
               value={options["country"]}
               onChange={(e) =>
-                saveOptions({ ...options, country: e.target.value })
+                saveOptions({
+                  ...options,
+                  country: e.target
+                    .value as DateWidgetOptions["country"],
+                })
               }
             >
               {COUNTRY_OPTIONS.map((c) => (
@@ -159,7 +170,11 @@ const DateWidget = ({ date, editable }: DateWidgetProps) => {
               id="language"
               value={options["language"]}
               onChange={(e) =>
-                saveOptions({ ...options, language: e.target.value })
+                saveOptions({
+                  ...options,
+                  language: e.target
+                    .value as DateWidgetOptions["language"],
+                })
               }
             >
               {LANGUAGE_OPTIONS.map((l) => (
@@ -177,7 +192,11 @@ const DateWidget = ({ date, editable }: DateWidgetProps) => {
               id="weekday"
               value={options["weekday"]}
               onChange={(e) =>
-                saveOptions({ ...options, weekday: e.target.value })
+                saveOptions({
+                  ...options,
+                  weekday: e.target
+                    .value as DateWidgetOptions["weekday"],
+                })
               }
             >
               {WEEKDAY_OPTIONS.map((c) => (
@@ -193,7 +212,10 @@ const DateWidget = ({ date, editable }: DateWidgetProps) => {
               id="day"
               value={options["day"]}
               onChange={(e) =>
-                saveOptions({ ...options, day: e.target.value })
+                saveOptions({
+                  ...options,
+                  day: e.target.value as DateWidgetOptions["day"],
+                })
               }
             >
               {DAY_OPTIONS.map((c) => (
@@ -209,7 +231,10 @@ const DateWidget = ({ date, editable }: DateWidgetProps) => {
               id="month"
               value={options["month"]}
               onChange={(e) =>
-                saveOptions({ ...options, month: e.target.value })
+                saveOptions({
+                  ...options,
+                  month: e.target.value as DateWidgetOptions["month"],
+                })
               }
             >
               {MONTH_OPTIONS.map((l) => (
@@ -225,7 +250,10 @@ const DateWidget = ({ date, editable }: DateWidgetProps) => {
               id="year"
               value={options["year"]}
               onChange={(e) =>
-                saveOptions({ ...options, year: e.target.value })
+                saveOptions({
+                  ...options,
+                  year: e.target.value as DateWidgetOptions["year"],
+                })
               }
             >
               {YEAR_OPTIONS.map((l) => (
@@ -244,8 +272,6 @@ const DateWidget = ({ date, editable }: DateWidgetProps) => {
         </div>
       </div>
     </div>
-  ) : (
-    <h1 className="date-display">{displayDateString()}</h1>
   );
 };
 

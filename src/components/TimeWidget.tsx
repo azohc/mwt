@@ -11,23 +11,32 @@ const LANG_ENGLISH = "english";
 const HOURS_12 = "12h";
 const HOURS_24 = "24h";
 
-const languages = [LANG_SPANISH, LANG_ENGLISH];
-const countries = [COUNTRY_SPAIN, COUNTRY_USA];
-const hourFormats = [HOURS_12, HOURS_24];
+const LANGUAGE_OPTIONS = [LANG_SPANISH, LANG_ENGLISH] as const;
+const COUNTRY_OPTIONS = [COUNTRY_SPAIN, COUNTRY_USA] as const;
+const HOUR_FORMAT_OPTIONS = [HOURS_12, HOURS_24] as const;
 
-const initialOptions = {
+interface TimeWidgetOptions {
+  country: (typeof COUNTRY_OPTIONS)[number];
+  language: (typeof LANGUAGE_OPTIONS)[number];
+  hourFormat: (typeof HOUR_FORMAT_OPTIONS)[number];
+}
+
+const initialOptions: TimeWidgetOptions = {
   country: COUNTRY_SPAIN,
   language: LANG_ENGLISH,
   hourFormat: HOURS_12,
 };
 
 const storeKey = "TIME_WIDGET_OPTIONS";
-const loadOptions = () => {
+const loadOptions = (): TimeWidgetOptions => {
   const ls = localStorage.getItem(storeKey);
-  if (!ls) {
+  if (!ls) return initialOptions;
+
+  try {
+    return JSON.parse(ls);
+  } catch (error) {
     return initialOptions;
   }
-  return JSON.parse(ls);
 };
 
 interface TimeWidgetProps {
@@ -36,13 +45,10 @@ interface TimeWidgetProps {
 }
 
 const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
-  const [options, setOptions] = useState(loadOptions);
+  const [options, setOptions] =
+    useState<TimeWidgetOptions>(loadOptions);
 
-  const saveOptions = (options: {
-    country: string;
-    language: string;
-    hourFormat: string;
-  }) => {
+  const saveOptions = (options: TimeWidgetOptions) => {
     setOptions(options);
     localStorage.setItem(storeKey, JSON.stringify(options));
   };
@@ -77,7 +83,10 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
     });
   };
 
-  return editable ? (
+  if (!editable) {
+    return <h1 className="time-display">{displayTimeString()}</h1>;
+  }
+  return (
     <div className="time-editable-container">
       <div className="time-header">
         <h1 className="time-widget-title">time format</h1>
@@ -92,10 +101,14 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
               id="country"
               value={options["country"]}
               onChange={(e) =>
-                saveOptions({ ...options, country: e.target.value })
+                saveOptions({
+                  ...options,
+                  country: e.target
+                    .value as TimeWidgetOptions["country"],
+                })
               }
             >
-              {countries.map((c) => (
+              {COUNTRY_OPTIONS.map((c) => (
                 <option key={c} value={c}>
                   {c}
                 </option>
@@ -108,10 +121,14 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
               id="language"
               value={options["language"]}
               onChange={(e) =>
-                saveOptions({ ...options, language: e.target.value })
+                saveOptions({
+                  ...options,
+                  language: e.target
+                    .value as TimeWidgetOptions["language"],
+                })
               }
             >
-              {languages.map((l) => (
+              {LANGUAGE_OPTIONS.map((l) => (
                 <option key={l} value={l}>
                   {l}
                 </option>
@@ -127,11 +144,12 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
               onChange={(e) =>
                 saveOptions({
                   ...options,
-                  hourFormat: e.target.value,
+                  hourFormat: e.target
+                    .value as TimeWidgetOptions["hourFormat"],
                 })
               }
             >
-              {hourFormats.map((hf) => (
+              {HOUR_FORMAT_OPTIONS.map((hf) => (
                 <option key={hf} value={hf}>
                   {hf}
                 </option>
@@ -147,8 +165,6 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
         </div>
       </div>
     </div>
-  ) : (
-    <h1 className="time-display">{displayTimeString()}</h1>
   );
 };
 
