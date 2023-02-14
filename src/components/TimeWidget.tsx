@@ -81,7 +81,8 @@ const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
     <div className="time-editable-container">
       <div className="header">
         <h1 className="widget-title">time format</h1>
-        <button className="drag-handle">✋👊</button>
+        <></>
+        {/* <button className="drag-handle">✋👊</button> */}
       </div>
       <div className="controls-preview">
         <div className="controls">

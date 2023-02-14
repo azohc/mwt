@@ -1,3 +1,10 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
 .edit-button {
   color: var(--c-white);
   background: var(--c-bg);

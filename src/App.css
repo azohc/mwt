@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Anonymous+Pro|Inconsolata|Source+Code+Pro|Roboto+Mono");
+
 :root {
   --c-white: #ffffff;
   --c-bg: #44475a;
@@ -10,6 +12,7 @@
 }
 
 .App {
+  font-family: Inconsolata, system-ui, -apple-system, monospace;
   text-align: center;
   display: flex;
   background-color: var(--c-bg);

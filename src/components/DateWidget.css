@@ -1,8 +1,8 @@
-.time-display {
-  font-size: 6rem;
+.date-display {
+  font-size: 3rem;
 }
 
-.time-editable-container {
+.date-editable-container {
   min-width: 360px;
   padding: 1rem;
   display: flex;
@@ -12,47 +12,33 @@
   border-radius: 8px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.time-display,
-.widget-title,
-.widget-preview {
+.date-display,
+.date-widget-title,
+.date-widget-preview {
   font-weight: normal;
 }
 
-.drag-handle {
-  background-color: var(--c-bg);
-  border: none;
-  /* TODO implement draggability */
-  /* cursor: grab; */
-  cursor: wait;
-}
-
-.controls-preview {
-  padding-top: 1rem;
+.date-controls-preview {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
 }
 
-.controls {
+.date-controls {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   align-items: flex-start;
 }
 
-.control {
+.date-control {
   width: 100%;
   display: flex;
   gap: 0.5rem;
   align-items: baseline;
 }
 
-.control > select {
+.date-control > select {
   flex-grow: 1;
   background-color: var(--c-bg-darker);
   color: var(--c-white);
@@ -61,12 +47,12 @@
   text-align: end;
 }
 
-.preview {
+.date-preview {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
 
-.preview-label {
+.date-preview-label {
   text-align: end;
 }
