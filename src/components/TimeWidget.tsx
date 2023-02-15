@@ -29,7 +29,7 @@ const initialOptions: TimeWidgetConfig = {
 };
 
 const storeKey = "TIME_WIDGET_CONFIG";
-const loadOptions = (): TimeWidgetConfig => {
+const loadConfig = (): TimeWidgetConfig => {
   const ls = localStorage.getItem(storeKey);
   if (!ls) return initialOptions;
 
@@ -46,7 +46,7 @@ interface TimeWidgetProps {
 }
 
 const TimeWidget = ({ date, editable }: TimeWidgetProps) => {
-  const [config, setConfig] = useState<TimeWidgetConfig>(loadOptions);
+  const [config, setConfig] = useState<TimeWidgetConfig>(loadConfig);
 
   const saveConfig = (options: TimeWidgetConfig) => {
     setConfig(options);

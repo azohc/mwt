@@ -1,0 +1,65 @@
+.bmset-display {
+  font-size: 6rem;
+}
+
+.bmset-editable-container {
+  min-width: 360px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--c-bg);
+  border: 8px solid var(--c-bg-darker);
+  border-radius: 8px;
+}
+
+.bmset-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bmset-name > input {
+  width: auto;
+}
+
+.bmset-key > input {
+  width: 20px;
+}
+
+.bmset-display,
+.bmset-widget-title,
+.bmset-widget-preview {
+  font-weight: normal;
+}
+
+.bmset-drag-handle {
+  background-color: var(--c-bg);
+  border: none;
+  /* TODO implement draggability */
+  /* cursor: grab; */
+  cursor: wait;
+}
+
+.bmset-controls-preview {
+  padding-top: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.bmset-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.bmset-preview {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-inline-start: auto;
+}
+
+.bmset-preview-label {
+  text-align: end;
+}
