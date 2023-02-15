@@ -20,7 +20,7 @@ yarn install
 - [eslint](https://eslint.org/): a pluggable linting utility for javascript
 - [husky](https://github.com/typicode/husky): a git hooks manager for node.js
 - [jest](https://jestjs.io/) + [testing-library](https://testing-library.com/): testing frameworks for javascript
-- [storybook](https://storybook.js.org/): a development environment for UI components
+- [storybook](https://storybook.js.org/): a development environment for UI components. [view deployed instance](https://63ec95070bce835ec1bea0d0-ufkauyknxy.chromatic.com/?path=/story/homepage--page)
 
 ## react scripts
 
