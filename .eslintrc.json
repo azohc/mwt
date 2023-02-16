@@ -19,6 +19,12 @@
       "env": {
         "jest": true
       }
+    },
+    {
+      "files": ["**/*.stories.*"],
+      "rules": {
+        "import/no-anonymous-default-export": "off"
+      }
     }
   ],
   "parser": "@typescript-eslint/parser",
