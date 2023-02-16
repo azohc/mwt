@@ -3,35 +3,24 @@ import { useEffect, useState } from "react";
 import Search from "./components/Search";
 import * as React from "react";
 import Dashboard from "./views/Dashboard";
+import TopRightButtons from "./components/TopRightButtons";
 
-export interface BookmarkSet {
+export type BookmarkSet = {
   name: string;
   keybind: string;
-  bookmarks: Bookmark[];
-}
-
-export interface Bookmark {
-  displayName: string;
-  url: string;
-  keybind: string;
-}
+  // bookmarks: Bookmark[];
+};
 
 const storeKey = "BOOKMARK_SETS";
-const loadBookmarkSetWidgets = () => {
-  const emptyMap = new Map<string, BookmarkSet>();
+const loadBookmarkSetWidgets = (): BookmarkSet[] => {
   const ls = localStorage.getItem(storeKey);
-  if (!ls) return emptyMap;
+  if (!ls) return [];
 
   try {
     const parsed = JSON.parse(ls);
-    console.debug(
-      "loadBookmarkSetWidgets: parsed",
-      parsed,
-      "from ls"
-    );
-    return emptyMap; // TODO return parsed map converted to map
+    return parsed;
   } catch (error) {
-    return emptyMap;
+    return [];
   }
 };
 
@@ -39,42 +28,14 @@ const App = () => {
   const [editMode, setEditMode] = useState(false);
   const [searchVisible, setSearchVisible] = useState(false);
 
-  const [bookmarkSetWidgets, setBookmarkSetWidgets] = useState(
-    loadBookmarkSetWidgets()
+  const [widgetsState, setWidgetsState] = useState<BookmarkSet[]>(
+    loadBookmarkSetWidgets
   );
 
-  const saveBookmarkSetWidgets = (bmss: BookmarkSet[]) => {
-    console.debug(
-      "saveBookmarkSetWidgets: saving from App. array of new bookmarksets:",
-      bmss
-    );
-
-    const bmswMap = new Map<string, BookmarkSet>();
-    bmss.forEach((bms) => bmswMap.set(bms.name, bms));
-
-    console.debug(
-      "saveBookmarkSetWidgets: populated map from bookmarksets array:",
-      bmswMap
-    );
-
-    setBookmarkSetWidgets(bmswMap);
-
-    console.debug(
-      "saveBookmarkSetWidgets: saved to state",
-      bookmarkSetWidgets,
-      "should equal",
-      bmswMap
-    );
-
-    const stringifiedMap = JSON.stringify(bookmarkSetWidgets);
-
-    console.debug(
-      "saveBookmarkSetWidgets: saving stringified map to ls",
-      stringifiedMap
-    );
-
+  useEffect(() => {
+    const stringifiedMap = JSON.stringify(widgetsState);
     localStorage.setItem(storeKey, stringifiedMap);
-  };
+  }, [widgetsState]);
 
   const handleKeyup = React.useCallback(
     ({ code }: { code: string }) => {
@@ -86,6 +47,14 @@ const App = () => {
     },
     [setSearchVisible]
   );
+
+  const handleAddBookmarkSet = () =>
+    setWidgetsState(
+      widgetsState.concat({
+        name: "",
+        keybind: "",
+      })
+    );
 
   useEffect(() => {
     if (!editMode) {
@@ -101,13 +70,15 @@ const App = () => {
         <Search />
       ) : (
         <>
-          <Dashboard
+          <TopRightButtons
             editMode={editMode}
             setEditMode={setEditMode}
-            bookmarkSetWidgets={Array.from(
-              bookmarkSetWidgets.values()
-            )}
-            saveBookmarkSetWidgets={saveBookmarkSetWidgets}
+            onAddBookmarkSet={handleAddBookmarkSet}
+          />
+          <Dashboard
+            editMode={editMode}
+            bookmarkSetWidgets={widgetsState}
+            setWidgetsState={setWidgetsState}
           />
         </>
       )}

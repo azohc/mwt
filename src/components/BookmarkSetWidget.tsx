@@ -1,69 +1,59 @@
 import * as React from "react";
-import { useId, useState } from "react";
-import "./BookmarkSetWidget.css";
+import { useId } from "react";
 import { BookmarkSet } from "../App";
-import TextInput from "./TextInput";
+import "./BookmarkSetWidget.css";
 
-interface BookmarkSetWidgetProps {
+type BookmarkSetWidgetControls = {
   editable: boolean;
-  bookmarkSet: BookmarkSet;
-  onBookmarkSetConfigChange: (bms: BookmarkSet) => void;
-}
+  setWidgetState: (bms: BookmarkSet) => void;
+};
+
+type BookmarkSetWidgetProps = BookmarkSet & BookmarkSetWidgetControls;
 
 const BookmarkSetWidget = ({
+  name,
+  keybind,
+  // bookmarks,
   editable,
-  bookmarkSet,
-  onBookmarkSetConfigChange,
+  setWidgetState,
 }: BookmarkSetWidgetProps) => {
+  const state = { name, keybind };
   const id = useId();
-  const [name, setName] = useState(bookmarkSet.name || "");
-  const [keybind, setKeybind] = useState(bookmarkSet.keybind || "");
-  const [bookmarks] = useState(bookmarkSet.bookmarks || []);
 
-  const saveBookmarksetConfig = () => {
-    console.debug(
-      "saveBookmarksetConfig: saving from BookmarkSetWidget"
-    );
+  if (!editable) return <h1 className="bmset-display">{name}</h1>;
 
-    onBookmarkSetConfigChange({
-      name,
-      keybind,
-      bookmarks,
-    });
-
-    console.debug(
-      "saveBookmarksetConfig: saved from BookmarkSetWidget"
-    );
-  };
-
-  if (!editable) {
-    return <h1 className="bmset-display">{bookmarkSet.name}</h1>;
-  }
   return (
     <div className="bmset-editable-container">
       <div className="bmset-header">
-        <TextInput
-          classNames="bmset-name"
-          id={id + "-name"}
-          initialValue={name}
-          label="name"
-          maxLength={11}
-          onValueChange={(newValue) => {
-            setName(newValue);
-            saveBookmarksetConfig();
-          }}
-        />
-        <TextInput
-          classNames="bmset-key"
-          id={id + "-key"}
-          initialValue={keybind}
-          label="key"
-          maxLength={1}
-          onValueChange={(newValue) => {
-            setKeybind(newValue);
-            saveBookmarksetConfig();
-          }}
-        />
+        <div className={"ti-container bmset-name"}>
+          <label htmlFor={`${id}-name`}>name</label>
+          <input
+            type="text"
+            value={name}
+            onChange={({ target }) =>
+              setWidgetState({ ...state, name: target.value })
+            }
+            maxLength={11}
+            placeholder={"bookmarkset"}
+            id={`${id}-name`}
+            aria-describedby={`${id}-name`}
+            autoComplete="nope"
+          />
+        </div>
+        <div className={"ti-container bmset-key"}>
+          <label htmlFor={`${id}-key`}>key</label>
+          <input
+            type="text"
+            value={keybind}
+            onChange={({ target }) =>
+              setWidgetState({ ...state, keybind: target.value })
+            }
+            maxLength={1}
+            id={`${id}-key`}
+            aria-describedby={`${id}-key`}
+            autoComplete="nope"
+          />
+        </div>
       </div>
     </div>
   );

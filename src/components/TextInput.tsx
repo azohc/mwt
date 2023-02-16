@@ -4,7 +4,7 @@ import "./TextInput.css";
 interface TextInputProps {
   id: string;
   label: string;
-  initialValue: string;
+  value: string;
   onValueChange: (newValue: string) => void;
   placeholder?: string;
   maxLength?: number;
@@ -14,7 +14,7 @@ interface TextInputProps {
 const TextInput = ({
   id,
   label,
-  initialValue,
+  value,
   onValueChange,
   placeholder,
   maxLength,
@@ -25,7 +25,7 @@ const TextInput = ({
       <label htmlFor={id}>{label}</label>
       <input
         type="text"
-        value={initialValue}
+        value={value}
         onChange={(e) => {
           onValueChange(e.target.value);
         }}

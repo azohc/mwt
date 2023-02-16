@@ -1,0 +1,24 @@
+.top-right-buttons {
+  top: 0.5rem;
+  right: 0.5rem;
+  position: absolute;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-button,
+.add-bmset-button {
+  color: var(--c-white);
+  background: var(--c-bg);
+  border-radius: 8px;
+  border: 4px solid var(--c-bg-darker);
+  padding: 0.5rem;
+  cursor: pointer;
+  opacity: 0.22;
+  transition: opacity 0.5s;
+}
+
+.add-bmset-button:hover,
+.edit-button:hover {
+  opacity: 1;
+}
