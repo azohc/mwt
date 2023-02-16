@@ -21,11 +21,19 @@ const BookmarkSetWidget = ({
   const [bookmarks] = useState(bookmarkSet.bookmarks || []);
 
   const saveBookmarksetConfig = () => {
+    console.debug(
+      "saveBookmarksetConfig: saving from BookmarkSetWidget"
+    );
+
     onBookmarkSetConfigChange({
       name,
       keybind,
       bookmarks,
     });
+
+    console.debug(
+      "saveBookmarksetConfig: saved from BookmarkSetWidget"
+    );
   };
 
   if (!editable) {

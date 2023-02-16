@@ -22,6 +22,29 @@ const Dashboard = ({
   const [date, setDate] = useState(new Date());
   setInterval(() => setDate(new Date()), 1000);
 
+  const handleBookmarkSetChange = (bms: BookmarkSet, i: number) => {
+    console.debug(
+      "handleBookmarkSetChange: handling bmset change from Dashboard",
+      bookmarkSetWidgets,
+      bms,
+      i
+    );
+    console.debug(
+      "handleBookmarkSetChange: changed bms:",
+      bms,
+      `(index ${i})`
+    );
+
+    const newBms = bookmarkSetWidgets.slice();
+    newBms[i] = bms;
+
+    console.debug(
+      "handleBookmarkSetChange: saving new bmswidgets:",
+      newBms
+    );
+    saveBookmarkSetWidgets(newBms);
+  };
+
   return (
     <div className="dashboard-container">
       <div className="top-right-buttons">
@@ -58,11 +81,9 @@ const Dashboard = ({
             key={bms.name}
             editable={editMode}
             bookmarkSet={bms}
-            onBookmarkSetConfigChange={(bms) => {
-              const newBms = bookmarkSetWidgets.slice();
-              newBms[i] = bms;
-              saveBookmarkSetWidgets(newBms);
-            }}
+            onBookmarkSetConfigChange={() =>
+              handleBookmarkSetChange(bms, i)
+            }
           />
         ))}
       </div>
