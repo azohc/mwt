@@ -37,7 +37,7 @@ const Dashboard = ({
             key={i}
             name={bms.name}
             keybind={bms.keybind}
-            // bookmarks={bms.bookmarks}
+            bookmarks={bms.bookmarks}
             editable={editMode}
             setWidgetState={(state) =>
               setWidgetsState([

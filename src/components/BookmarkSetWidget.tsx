@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useId } from "react";
+import { useId, useState } from "react";
 import { BookmarkSet } from "../App";
 import "./BookmarkSetWidget.css";
 
@@ -13,19 +13,38 @@ type BookmarkSetWidgetProps = BookmarkSet & BookmarkSetWidgetControls;
 const BookmarkSetWidget = ({
   name,
   keybind,
-  // bookmarks,
+  bookmarks,
   editable,
   setWidgetState,
 }: BookmarkSetWidgetProps) => {
-  const state = { name, keybind };
+  const state = { name, keybind, bookmarks };
   const id = useId();
 
-  if (!editable) return <h1 className="bmset-display">{name}</h1>;
+  const [bookmarkInEditMode, setBookmarkInEditMode] = useState(NaN);
+  const [bookmarkName, setBookmarkName] = useState("");
+  const [bookmarkKeybind, setBookmarkKeybind] = useState("");
+  const [bookmarkURL, setBookmarkURL] = useState("");
+
+  if (!editable)
+    return (
+      <div className="bmset-container">
+        <h1 className="bmset-display">{name}</h1>
+        <div className="bmset-bookmark-container">
+          {bookmarks.map((bm, i) => (
+            <a className="bookmark" key={i} href={bm.url}>
+              {bm.name}
+            </a>
+          ))}
+        </div>
+      </div>
+    );
+
+  // TODO click on a grid row to edit it, ok, but click on a particular cell to focus it after selecting the row for editing?
 
   return (
     <div className="bmset-editable-container">
-      <div className="bmset-header">
-        <div className={"ti-container bmset-name"}>
+      <div className="bmset-editable-header">
+        <div className="ti-container bmset-name">
           <label htmlFor={`${id}-name`}>name</label>
           <input
             type="text"
@@ -40,7 +59,7 @@ const BookmarkSetWidget = ({
             autoComplete="nope"
           />
         </div>
-        <div className={"ti-container bmset-key"}>
+        <div className="ti-container bmset-key">
           <label htmlFor={`${id}-key`}>key</label>
           <input
             type="text"
@@ -51,6 +70,156 @@ const BookmarkSetWidget = ({
             maxLength={1}
             id={`${id}-key`}
             aria-describedby={`${id}-key`}
+            autoComplete="nope"
+          />
+        </div>
+      </div>
+      <div className="bmgrid">
+        <>
+          <div className="bmgrid-header">name</div>
+          <div className="bmgrid-header">url</div>
+          <div className="bmgrid-header">key</div>
+          <div className="bmgrid-header"></div>
+          <div className="bmgrid-header"></div>
+        </>
+        {bookmarks.map((bm, i) => (
+          <>
+            <div className="bmgrid-cell">{bm.name}</div>
+            <div className="bmgrid-cell url-cell">{bm.url}</div>
+            <div className="bmgrid-cell">{bm.keybind}</div>
+            <button
+              disabled={bookmarkInEditMode === i}
+              className="bmgrid-row-edit-btn"
+              onClick={() => {
+                setBookmarkInEditMode(i);
+                setBookmarkName(bm.name);
+                setBookmarkKeybind(bm.keybind);
+                setBookmarkURL(bm.url);
+              }}
+            >
+              edit
+            </button>
+            <button
+              disabled={bookmarkInEditMode !== i}
+              className="bmgrid-row-rm-btn"
+              onClick={() => {
+                setBookmarkInEditMode(NaN);
+                setBookmarkName("");
+                setBookmarkKeybind("");
+                setBookmarkURL("");
+                setWidgetState({
+                  ...state,
+                  bookmarks: [
+                    ...bookmarks.splice(0, bookmarkInEditMode),
+                    ...bookmarks.splice(bookmarkInEditMode + 1),
+                  ],
+                });
+              }}
+            >
+              rm
+            </button>
+          </>
+        ))}
+      </div>
+      <div className="bookmark-add-rm-buttons">
+        <button
+          onClick={() =>
+            setWidgetState({
+              ...state,
+              bookmarks: bookmarks.concat({
+                name: "",
+                url: "",
+                keybind: "",
+              }),
+            })
+          }
+        >
+          add bookmark
+        </button>
+      </div>
+      <div
+        className={"edit-row-container".concat(
+          isNaN(bookmarkInEditMode) ? " no-row-selected" : ""
+        )}
+      >
+        <div className="edit-row-header">
+          <div className="ti-container alt-bg bm-name">
+            <label htmlFor={`${id}-bm-name`}>name</label>
+            <input
+              type="text"
+              disabled={isNaN(bookmarkInEditMode)}
+              value={bookmarkName}
+              onChange={({ target }) => {
+                setWidgetState({
+                  ...state,
+                  bookmarks: [
+                    ...bookmarks.splice(0, bookmarkInEditMode),
+                    {
+                      ...bookmarks[bookmarkInEditMode],
+                      name: target.value,
+                    },
+                    ...bookmarks.splice(bookmarkInEditMode + 1),
+                  ],
+                });
+                setBookmarkName(target.value);
+              }}
+              placeholder={"bookmark name"}
+              id={`${id}-bm-name`}
+              maxLength={11}
+              aria-describedby={`${id}-bm-name`}
+              autoComplete="nope"
+            />
+          </div>
+          <div className="ti-container alt-bg bm-key">
+            <label htmlFor={`${id}-bm-key`}>key</label>
+            <input
+              type="text"
+              disabled={isNaN(bookmarkInEditMode)}
+              value={bookmarkKeybind}
+              onChange={({ target }) => {
+                setWidgetState({
+                  ...state,
+                  bookmarks: [
+                    ...bookmarks.splice(0, bookmarkInEditMode),
+                    {
+                      ...bookmarks[bookmarkInEditMode],
+                      keybind: target.value,
+                    },
+                    ...bookmarks.splice(bookmarkInEditMode + 1),
+                  ],
+                });
+                setBookmarkKeybind(target.value);
+              }}
+              maxLength={1}
+              id={`${id}-bm-key`}
+              aria-describedby={`${id}-bm-key`}
+              autoComplete="nope"
+            />
+          </div>
+        </div>
+        <div className="ti-container alt-bg bm-url">
+          <label htmlFor={`${id}-bm-url`}>url</label>
+          <input
+            type="text"
+            disabled={isNaN(bookmarkInEditMode)}
+            value={bookmarkURL}
+            onChange={({ target }) => {
+              setWidgetState({
+                ...state,
+                bookmarks: [
+                  ...bookmarks.splice(0, bookmarkInEditMode),
+                  {
+                    ...bookmarks[bookmarkInEditMode],
+                    url: target.value,
+                  },
+                  ...bookmarks.splice(bookmarkInEditMode + 1),
+                ],
+              });
+              setBookmarkURL(target.value);
+            }}
+            placeholder={"bookmark url"}
+            id={`${id}-bm-url`}
+            aria-describedby={`${id}-bm-url`}
             autoComplete="nope"
           />
         </div>

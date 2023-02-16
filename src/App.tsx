@@ -8,7 +8,13 @@ import TopRightButtons from "./components/TopRightButtons";
 export type BookmarkSet = {
   name: string;
   keybind: string;
-  // bookmarks: Bookmark[];
+  bookmarks: Bookmark[];
+};
+
+export type Bookmark = {
+  name: string;
+  url: string;
+  keybind: string;
 };
 
 const storeKey = "BOOKMARK_SETS";
@@ -53,6 +59,7 @@ const App = () => {
       widgetsState.concat({
         name: "",
         keybind: "",
+        bookmarks: [],
       })
     );
 
