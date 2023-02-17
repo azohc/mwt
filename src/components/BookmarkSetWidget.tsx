@@ -83,7 +83,7 @@ const BookmarkSetWidget = ({
           <div className="bmgrid-header"></div>
         </>
         {bookmarks.map((bm, i) => (
-          <>
+          <React.Fragment key={i}>
             <div className="bmgrid-cell">{bm.name}</div>
             <div className="bmgrid-cell url-cell">{bm.url}</div>
             <div className="bmgrid-cell">{bm.keybind}</div>
@@ -118,7 +118,7 @@ const BookmarkSetWidget = ({
             >
               rm
             </button>
-          </>
+          </React.Fragment>
         ))}
       </div>
       <div className="bookmark-add-rm-buttons">
@@ -150,18 +150,19 @@ const BookmarkSetWidget = ({
               disabled={isNaN(bookmarkInEditMode)}
               value={bookmarkName}
               onChange={({ target }) => {
+                setBookmarkName(target.value);
+                const newBookmark = {
+                  ...bookmarks[bookmarkInEditMode],
+                  name: target.value,
+                };
                 setWidgetState({
                   ...state,
                   bookmarks: [
                     ...bookmarks.splice(0, bookmarkInEditMode),
-                    {
-                      ...bookmarks[bookmarkInEditMode],
-                      name: target.value,
-                    },
+                    newBookmark,
                     ...bookmarks.splice(bookmarkInEditMode + 1),
                   ],
                 });
-                setBookmarkName(target.value);
               }}
               placeholder={"bookmark name"}
               id={`${id}-bm-name`}
@@ -177,18 +178,19 @@ const BookmarkSetWidget = ({
               disabled={isNaN(bookmarkInEditMode)}
               value={bookmarkKeybind}
               onChange={({ target }) => {
+                setBookmarkKeybind(target.value);
+                const newBookmark = {
+                  ...bookmarks[bookmarkInEditMode],
+                  keybind: target.value,
+                };
                 setWidgetState({
                   ...state,
                   bookmarks: [
                     ...bookmarks.splice(0, bookmarkInEditMode),
-                    {
-                      ...bookmarks[bookmarkInEditMode],
-                      keybind: target.value,
-                    },
+                    newBookmark,
                     ...bookmarks.splice(bookmarkInEditMode + 1),
                   ],
                 });
-                setBookmarkKeybind(target.value);
               }}
               maxLength={1}
               id={`${id}-bm-key`}
@@ -204,18 +206,19 @@ const BookmarkSetWidget = ({
             disabled={isNaN(bookmarkInEditMode)}
             value={bookmarkURL}
             onChange={({ target }) => {
+              setBookmarkURL(target.value);
+              const newBookmark = {
+                ...bookmarks[bookmarkInEditMode],
+                url: target.value,
+              };
               setWidgetState({
                 ...state,
                 bookmarks: [
                   ...bookmarks.splice(0, bookmarkInEditMode),
-                  {
-                    ...bookmarks[bookmarkInEditMode],
-                    url: target.value,
-                  },
+                  newBookmark,
                   ...bookmarks.splice(bookmarkInEditMode + 1),
                 ],
               });
-              setBookmarkURL(target.value);
             }}
             placeholder={"bookmark url"}
             id={`${id}-bm-url`}

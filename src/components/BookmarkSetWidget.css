@@ -14,8 +14,17 @@ h1.bmset-display {
 }
 
 .bmset-bookmark-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
   overflow-y: auto;
   text-align: center;
+}
+
+.bookmark {
+  text-decoration: none;
+  color: var(--c-gray);
 }
 
 .bmset-editable-container {
@@ -126,8 +135,11 @@ h1.bmset-display {
 }
 
 .url-cell {
+  height: 24px;
   width: 200px;
-  overflow-x: hidden;
+  text-align: start;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .bookmark-add-rm-buttons {
@@ -168,10 +180,4 @@ h1.bmset-display {
 .edit-row-header {
   display: flex;
   justify-content: space-between;
-}
-
-.bookmark {
-  text-decoration: none;
-  color: var(--c-gray);
-  margin: 0.5em 0em;
 }
