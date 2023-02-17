@@ -6,7 +6,7 @@ a flexible dashboard enhanced by customizable keyboard shortcuts to quickly perf
 
 - widgets to display time and weather information in a customizable format
 - bookmark widgets that respond to keyboard shortcuts
-- fullscreen search with google, youtube, or duckduckgo
+- search with google, youtube, or duckduckgo by prepending a character to the query
 
 ## installation
 
