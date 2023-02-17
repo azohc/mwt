@@ -1,0 +1,6 @@
+implement modal
+bmset
+  respond to key + chord to open bookmark
+  add dim indicators of configured keys + chords
+  handle conflicting keys
+
