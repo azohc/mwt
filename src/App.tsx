@@ -4,8 +4,10 @@ import Search from "./components/Search";
 import * as React from "react";
 import Dashboard from "./views/Dashboard";
 import TopRightButtons from "./components/TopRightButtons";
+import { v4 } from "uuid";
 
 export type BookmarkSet = {
+  id: string;
   name: string;
   keybind: string;
   bookmarks: Bookmark[];
@@ -57,6 +59,7 @@ const App = () => {
   const handleAddBookmarkSet = () =>
     setWidgetsState(
       widgetsState.concat({
+        id: `bookmark-set-${v4()}`,
         name: "",
         keybind: "",
         bookmarks: [],

@@ -11,14 +11,15 @@ type BookmarkSetWidgetControls = {
 type BookmarkSetWidgetProps = BookmarkSet & BookmarkSetWidgetControls;
 
 const BookmarkSetWidget = ({
+  id,
   name,
   keybind,
   bookmarks,
   editable,
   setWidgetState,
 }: BookmarkSetWidgetProps) => {
-  const state = { name, keybind, bookmarks };
-  const id = useId();
+  const state = { id, name, keybind, bookmarks };
+  const htmlId = useId();
 
   const [bookmarkInEditMode, setBookmarkInEditMode] = useState(NaN);
   const [bookmarkName, setBookmarkName] = useState("");
@@ -45,7 +46,7 @@ const BookmarkSetWidget = ({
     <div className="bmset-editable-container">
       <div className="bmset-editable-header">
         <div className="ti-container bmset-name">
-          <label htmlFor={`${id}-name`}>name</label>
+          <label htmlFor={`${htmlId}-name`}>name</label>
           <input
             type="text"
             value={name}
@@ -54,13 +55,13 @@ const BookmarkSetWidget = ({
             }
             maxLength={11}
             placeholder={"bookmarkset"}
-            id={`${id}-name`}
-            aria-describedby={`${id}-name`}
+            id={`${htmlId}-name`}
+            aria-describedby={`${htmlId}-name`}
             autoComplete="nope"
           />
         </div>
         <div className="ti-container bmset-key">
-          <label htmlFor={`${id}-key`}>key</label>
+          <label htmlFor={`${htmlId}-key`}>key</label>
           <input
             type="text"
             value={keybind}
@@ -68,8 +69,8 @@ const BookmarkSetWidget = ({
               setWidgetState({ ...state, keybind: target.value })
             }
             maxLength={1}
-            id={`${id}-key`}
-            aria-describedby={`${id}-key`}
+            id={`${htmlId}-key`}
+            aria-describedby={`${htmlId}-key`}
             autoComplete="nope"
           />
         </div>
@@ -144,7 +145,7 @@ const BookmarkSetWidget = ({
       >
         <div className="edit-row-header">
           <div className="ti-container alt-bg bm-name">
-            <label htmlFor={`${id}-bm-name`}>name</label>
+            <label htmlFor={`${htmlId}-bm-name`}>name</label>
             <input
               type="text"
               disabled={isNaN(bookmarkInEditMode)}
@@ -165,14 +166,14 @@ const BookmarkSetWidget = ({
                 });
               }}
               placeholder={"bookmark name"}
-              id={`${id}-bm-name`}
+              id={`${htmlId}-bm-name`}
               maxLength={11}
-              aria-describedby={`${id}-bm-name`}
+              aria-describedby={`${htmlId}-bm-name`}
               autoComplete="nope"
             />
           </div>
           <div className="ti-container alt-bg bm-key">
-            <label htmlFor={`${id}-bm-key`}>key</label>
+            <label htmlFor={`${htmlId}-bm-key`}>key</label>
             <input
               type="text"
               disabled={isNaN(bookmarkInEditMode)}
@@ -193,14 +194,14 @@ const BookmarkSetWidget = ({
                 });
               }}
               maxLength={1}
-              id={`${id}-bm-key`}
-              aria-describedby={`${id}-bm-key`}
+              id={`${htmlId}-bm-key`}
+              aria-describedby={`${htmlId}-bm-key`}
               autoComplete="nope"
             />
           </div>
         </div>
         <div className="ti-container alt-bg bm-url">
-          <label htmlFor={`${id}-bm-url`}>url</label>
+          <label htmlFor={`${htmlId}-bm-url`}>url</label>
           <input
             type="text"
             disabled={isNaN(bookmarkInEditMode)}
@@ -221,8 +222,8 @@ const BookmarkSetWidget = ({
               });
             }}
             placeholder={"bookmark url"}
-            id={`${id}-bm-url`}
-            aria-describedby={`${id}-bm-url`}
+            id={`${htmlId}-bm-url`}
+            aria-describedby={`${htmlId}-bm-url`}
             autoComplete="nope"
           />
         </div>

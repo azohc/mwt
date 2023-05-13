@@ -34,7 +34,8 @@ const Dashboard = ({
       <div className="bookmarksets">
         {bookmarkSetWidgets.map((bms, i) => (
           <BookmarkSetWidget
-            key={i}
+            key={bms.id}
+            id={bms.id}
             name={bms.name}
             keybind={bms.keybind}
             bookmarks={bms.bookmarks}
